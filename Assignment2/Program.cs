@@ -162,28 +162,15 @@ namespace Assignment2
         {
             try
             {
-                int count = 0;
-                int num = 0;
-                foreach (int s in ar2)
+                int pos = 0;
+                for (int a = 0; a < ar2.Length; a++)
                 {
-                    if (s == 0)
+                    if (ar2[a] != 0)
                     {
-                        count++;
+                        int temp = ar2[a];
+                        ar2[a] = ar2[pos];
+                        ar2[pos++] = temp;
                     }
-                }
-                while (num < count)
-                {
-                    for (int a = 0; a < ar2.Length - 1; a++)
-                    {
-                        if (ar2[a] == 0 && ar2[a] <= ar2[a + 1])
-                        {
-                            int temp;
-                            temp = ar2[a];
-                            ar2[a] = ar2[a + 1];
-                            ar2[a + 1] = temp;
-                        }
-                    }
-                    num++;
                 }
                 for (int b = 0; b < ar2.Length; b++)
                 {
@@ -367,25 +354,25 @@ namespace Assignment2
                 {
                     return false;
                 }
-                Dictionary<char, char> map = new Dictionary<char, char>();
+                Dictionary<char, char> dict = new Dictionary<char, char>();
                 for (int e = 0; e < s1.Length; e++)
                 {
                     char c1 = s1[e];
                     char c2 = s2[e];
-                    if (map.ContainsKey(c1))
+                    if (dict.ContainsKey(c1))
                     {
-                        if (map[c1] != c2)
+                        if (dict[c1] != c2)
                         {
                             return false;
                         }
                     }
                     else
                     {
-                        map.Add(c1, c2);
+                        dict.Add(c1, c2);
                     }
                 }
-                HashSet<char> set = new HashSet<char>(map.Values);
-                if (set.Count == map.Values.Count)
+                HashSet<char> set = new HashSet<char>(dict.Values);
+                if (set.Count == dict.Values.Count)
                 {
                     return true;
                 }
@@ -430,6 +417,7 @@ namespace Assignment2
                 int sum2 = 0;
                 int count1 = 0;
                 int count2 = 0;
+                int counter = 0;
                 for (int f = 0; f < items.GetLength(0); f++)
                 {
                     key[f] = items[f, 0];
@@ -454,10 +442,14 @@ namespace Assignment2
                 Array.Reverse(val1);
                 Array.Sort(val2);
                 Array.Reverse(val2);
-                for (int h = 0; h < 5; h++)
+                for (int h = 0; h < items.GetLength(0); h++)
                 {
-                    sum1 += val1[h];
-                    sum2 += val2[h];
+                    if (val1[h] >= 0 && val1[h] <= 100 && val2[h] >= 0 && val2[h] <= 100 && counter < 5)
+                    {
+                        sum1 += val1[h];
+                        sum2 += val2[h];
+                        counter++;
+                    }
                 }
                 Console.WriteLine("[[" + unique[0] + "," + (sum1 / 5) + "],[" + unique[1] + "," + (sum2 / 5) + "]]");
             }
@@ -554,7 +546,7 @@ namespace Assignment2
                 int profit = 0;
                 for (int j = 0; j < prices.Length; j++)
                 {
-                    if (prices[j] > 0)
+                    if (prices[j] >= 0)
                     {
                         if (prices[j] < min)
                         {
