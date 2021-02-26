@@ -115,26 +115,33 @@ namespace Assignment2
         {
             try
             {
+                // Creating two sub arrays of each of the length 'n', one for the x's and the other is for y's
                 int[] ynums = new int[n];
                 int[] xnums = new int[n];
+                // Splitting the input array of length 2n into two equal parts of length 'n' each by using index positions into the array's created in the previous step
                 Array.Copy(nums, 0, xnums, 0, n);
                 Array.Copy(nums, n, ynums, 0, n);
                 if (n == 1)
                 {
+                    // In case of a each length value of '1', the final output array can be directly printed as below 
                     Console.WriteLine("[" + xnums[0] + "," + ynums[0] + "]");
                 }
                 else
                 {
+                    // For the input array of any other value of length, we traverse through the following loop to print all the values as per the requirement one 'x' value followed by one 'y' value
                     for (int c = 0; c < n; c++)
                     {
+                        // For printing the first x, y pai we will use the below block of code
                         if (c == 0)
                         {
                             Console.Write("[" + xnums[c] + "," + ynums[c]);
                         }
+                        // For the last element we print the end tag with a different loop
                         else if (c == n - 1)
                         {
                             Console.Write("," + xnums[c] + "," + ynums[c] + "]");
                         }
+                        // This block is intended for other middle x, y pairs
                         else
                         {
                             Console.Write("," + xnums[c] + "," + ynums[c]);
@@ -215,8 +222,11 @@ namespace Assignment2
         {
             try
             {
-                int sum = 0;
+                // For counting the final number of cool pairs we use this count variable
+                int count = 0;
+                // A dictionary is used for storing the values and its corresponding frequency by comparing it with the input array
                 Dictionary<int, int> cp = new Dictionary<int, int>();
+                // The for loop below checks for each element from the input array and if it exists in the dictionary it adds the count of the number, if not it adds the number to the dictionary
                 for (int b = 0; b < nums.Length; b++)
                 {
                     int element = nums[b];
@@ -229,11 +239,13 @@ namespace Assignment2
                         cp.Add(element, 1);
                     }
                 }
-                foreach (KeyValuePair<int, int> count in cp)
+                // Finally using the foreach loop we calculate the total number of cool pairs by adding the each calculated value to the variable count
+                foreach (KeyValuePair<int, int> k in cp)
                 {
-                    sum += count.Value * (count.Value - 1) / 2;
+                    count += k.Value * (k.Value - 1) / 2;
                 }
-                Console.WriteLine(sum);
+                // Print the value of the count of cool pairs
+                Console.WriteLine(count);
             }
             catch (Exception)
             {
@@ -262,20 +274,28 @@ namespace Assignment2
         {
             try
             {
+                // The 'f' variable is used to store the index value of the first value of the target value
                 int f = 0;
+                // The 's' variable is used to store the index value of the second value of the target value
                 int s = 0;
+                // This variable is used for accessing the position of values, whose sum will give the target value
                 int c = 0;
+                // Creating a dictionary to identify the first and second number whose sum gives the target number
                 Dictionary<int, int> ts = new Dictionary<int, int>();
+                // In this loop we go through each element of the array and if the number in the index of array is in dictionary we assign its index value to the 'f' variable 
+                // The corresponding number which is used for searching the index of the input array is copied in the second variable 's'
                 while (c < nums.Length)
                 {
                     if (ts.ContainsKey(nums[c]))
                     {
                         f = ts[nums[c]];
                         s = c;
+                        // We then print the found index positions of the first and the second number
                         Console.WriteLine("[" + f + "," + s + "]");
                     }
                     else
                     {
+                        // If the values are not found in te dictionary, then we add the difference of the target value and the value in the index of the number in the input array as the key value and the number in the value
                         ts.Add(target - nums[c], c);
                     }
                     c++;
@@ -309,13 +329,17 @@ namespace Assignment2
         {
             try
             {
+                // Create a dictionary to store the indices array as key values and the corresponding characters in the string as the corresponding values of the dictionary
                 Dictionary<int, char> rs = new Dictionary<int, char>();
                 for (int d = 0; d < indices.Length; d++)
                 {
+                    // Add each index value and the char value from the string into the dictionary
                     rs.Add(indices[d], s[d]);
                 }
+                // Copy the keys into a new variable for sorting them in ascending order
                 var keyList = rs.Keys.ToList();
                 keyList.Sort();
+                // After sorting print the corresponding key values from the dictionary which prints the sorted characters of the string
                 foreach (var key in keyList)
                 {
                     Console.Write(rs[key]);
@@ -350,32 +374,42 @@ namespace Assignment2
         {
             try
             {
+                // If the length of the two strings are different then we can directly say that they are not isomorphic
                 if (s1.Length != s2.Length)
                 {
                     return false;
                 }
+                // Create a dictionary to compare the similarity of the characters from both the input strings
                 Dictionary<char, char> dict = new Dictionary<char, char>();
+                // Use the loop to traverse through both the strings to compare the similarity of the strings
                 for (int e = 0; e < s1.Length; e++)
                 {
+                    // Copy each character value from the strings to a new temporary characters 
                     char c1 = s1[e];
                     char c2 = s2[e];
+                    // If the dictionary contains the key then we compare it with the corresponding value with the character at the same position from the second string
                     if (dict.ContainsKey(c1))
                     {
+                        // If the dictionary value from first string doesn't match with the second string's character at the corresponding position then we retrun false 
                         if (dict[c1] != c2)
                         {
                             return false;
                         }
                     }
+                    // If the dictionary does not contain the first string character at that corresponding position we add it to the dictionary
                     else
                     {
                         dict.Add(c1, c2);
                     }
                 }
+                // Create a hash set to store all the dictionary values or the frequency of the dictionary key's in it 
                 HashSet<char> set = new HashSet<char>(dict.Values);
+                // If the total count of the values in the hash set and the dictionary values are same then it is isomorphic and we return true
                 if (set.Count == dict.Values.Count)
                 {
                     return true;
                 }
+                // In all other cases we return false
                 return false;
             }
             catch (Exception)
@@ -410,38 +444,51 @@ namespace Assignment2
         {
             try
             {
+                // Create a new array for saving the id values of the students
                 int[] key = new int[items.GetLength(0)];
+                // Creating two arrays to save the values of each corresponding students
                 int[] val1 = new int[items.GetLength(0)];
                 int[] val2 = new int[items.GetLength(0)];
+                // Creating two variables sum1 and sum2 to calculate the top 5 scores and average it 
                 int sum1 = 0;
                 int sum2 = 0;
+                // Limiting the total count of scores for each student to 5 we create count1 and count2 varaibels
                 int count1 = 0;
                 int count2 = 0;
+                // In case of any other values for validating the negative or non-numeric values we use a counter variable to make sure exactly 5 non-negative values are added to find the average
                 int counter = 0;
+                // Loop through the arrays and add all the student id's to the array named key
                 for (int f = 0; f < items.GetLength(0); f++)
                 {
                     key[f] = items[f, 0];
                 }
+                // From those identify the unique keys by using the distict method from Linq and save thsoe unique key values in an array 
                 int[] unique = key.Distinct<int>().ToArray();
+                // Each of the unique student id values are stored in two separate integer variables for comparison 
                 int keyValue1 = unique[0];
                 int keyValue2 = unique[1];
+                // Traverse through the input 2D array and compare the student id's from input array with the unique id values and save the corresponding score values from 2D array to the created arrays of val1 and val2 
                 for (int g = 0; g < items.GetLength(0); g++)
                 {
+                    // If the student id value from the input array matches with the one of the unique key values then add the corresponding score values to one of the arrays
                     if (items[g, 0] == keyValue1)
                     {
                         val1[count1] = items[g, 1];
                         count1++;
                     }
+                    // If the student id value from the input array matches with the other unique key value then add the corresponding score values to other array
                     else if (items[g, 0] == keyValue2)
                     {
                         val2[count2] = items[g, 1];
                         count2++;
                     }
                 }
+                // Then sort both the arrays and reverse them to have them in descending order
                 Array.Sort(val1);
                 Array.Reverse(val1);
                 Array.Sort(val2);
                 Array.Reverse(val2);
+                // Create a loop to traverse through both the arrays and add 5 non negative numbers for each student id
                 for (int h = 0; h < items.GetLength(0); h++)
                 {
                     if (val1[h] >= 0 && val1[h] <= 100 && val2[h] >= 0 && val2[h] <= 100 && counter < 5)
@@ -451,6 +498,7 @@ namespace Assignment2
                         counter++;
                     }
                 }
+                // Finally print the student id and its corresponding average value by dividing its calculated sum value by 5 
                 Console.WriteLine("[[" + unique[0] + "," + (sum1 / 5) + "],[" + unique[1] + "," + (sum2 / 5) + "]]");
             }
             catch (Exception)
@@ -486,21 +534,29 @@ namespace Assignment2
         {
             try
             {
+                // Create a list to store all the numbers that have been already checked for the sum of squared to be 1
                 List<int> list = new List<int>();
+                // Loop through the given input number to calculate the squares of sum of each digit in the number
                 while (n > 0)
                 {
+                    // Declare a variable sum to calculate the sum of the squares of the digits of a number
                     int sum = 0;
+                    // Convert the given input integer to a string to easily access all the individual digits of the number
                     string num = n.ToString();
+                    // Converting the number to string traverse through the length of the string to cut off the number at each index, convert it back to integer and squaring it, adding it to the sum variable
                     for (int i = 0; i < num.Length; i++)
                     {
                         int temp = int.Parse(new string(num[i], 1));
                         sum += (temp * temp);
                     }
+                    // From the above loop we get the sum of the squares of the digits of the input number in the variable sum
                     n = sum;
+                    // If the sum of the squares of the digits is 1 then we return that the number is a happy number
                     if (sum == 1)
                     {
                         return true;
                     }
+                    // While adding a number to the list, if it's already present in the list then we return false and say that the given number is not a happy number
                     foreach (int val in list)
                     {
                         if (val == n)
@@ -508,6 +564,7 @@ namespace Assignment2
                             return false;
                         }
                     }
+                    // We add the number into the list if it's not already present in the list and continue the while loop until the sum value is 1
                     list.Add(n);
                 }
                 return false;
@@ -540,10 +597,14 @@ namespace Assignment2
         {
             try
             {
+                // Create a min and max variables for storing the stock with min and max price
                 int min = 100;
                 int max = 0;
+                // Create a variable to store the position of the min variable so that the pos of max variable greater than the pos of min variable
                 int pos = 0;
+                // Declare a variable profit to calculate the difference between the max and min value of the share
                 int profit = 0;
+                // Traverse through the input array to calcuate the min and max values as well as the position of the min value of the shares given in the input array
                 for (int j = 0; j < prices.Length; j++)
                 {
                     if (prices[j] >= 0)
@@ -553,17 +614,21 @@ namespace Assignment2
                             min = prices[j];
                             pos = j;
                         }
+                        // The max value should be always above the position of the min variable because we can sell a share only after buying it at the min value
                         if (prices[j] > max && j > pos)
                         {
                             max = prices[j];
                         }
                     }
                 }
+                // The profit value is calculate by the difference of the max and min value
                 profit = max - min;
+                // If the calculated profit value is greater than zero then return the corresponding profit value to the calling function
                 if (profit > 0)
                 {
                     return profit;
                 }
+                // Else in all other cases we return the profit values as 0
                 return 0;
             }
             catch (Exception)
@@ -598,18 +663,25 @@ namespace Assignment2
         {
             try
             {
+                // Create an array result with the length of 'steps + 1' when the number of steps is given to the function as input
                 int[] result = new int[steps + 1];
+                // The possibilities of climbing no steps is in 1 way and 1 step is 1 way and 2 steps is in 2 ways. So we store them in the first three index places of the array
                 result[0] = 1;
                 result[1] = 1;
                 result[2] = 2;
+                // Traverse through the loop until the number of steps given as input to the function
                 for (int k = 3; k <= steps; k++)
                 {
+                    // Initialize the value of the array with 0
                     result[k] = 0;
+                    // Create another loop to make sure that the only number of steps are just 1 or 2
                     for (int l = 1; l <= 2 && (k - l) >= 0; l++)
                     {
+                        // Now add the number of ways by adding the ways of all the numbers by calculating the corresponding 'k-l' value to the exisiting array position or the current step value
                         result[k] += result[k - l];
                     }
                 }
+                // Finally return the number of ways value stored for the final steps in the final steps position of the array 
                 Console.WriteLine(result[steps]);
             }
             catch (Exception)
