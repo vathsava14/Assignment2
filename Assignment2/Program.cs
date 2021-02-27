@@ -131,7 +131,7 @@ namespace Assignment2
                     // For the input array of any other value of length, we traverse through the following loop to print all the values as per the requirement one 'x' value followed by one 'y' value
                     for (int c = 0; c < n; c++)
                     {
-                        // For printing the first x, y pai we will use the below block of code
+                        // For printing the first x, y pair we will use the below block of code
                         if (c == 0)
                         {
                             Console.Write("[" + xnums[c] + "," + ynums[c]);
@@ -141,7 +141,7 @@ namespace Assignment2
                         {
                             Console.Write("," + xnums[c] + "," + ynums[c] + "]");
                         }
-                        // This block is intended for other middle x, y pairs
+                        // This block is intended for printing the other x, y pairs which are present in the middle
                         else
                         {
                             Console.Write("," + xnums[c] + "," + ynums[c]);
@@ -169,9 +169,12 @@ namespace Assignment2
         {
             try
             {
+                // Create a variable pos for saving the position of the zero variable in the input array 
                 int pos = 0;
+                // Traverse through the input array by using a for loop to shuffle the non-zero elements with the one's having zero in the particular index values
                 for (int a = 0; a < ar2.Length; a++)
                 {
+                    // If the value in that specific index is a non-zero value the compiler enters this loop and swaps the number in the index of 'pos' value and if it's a zero value it misses the loop and the 'pos' value remains same 
                     if (ar2[a] != 0)
                     {
                         int temp = ar2[a];
@@ -179,17 +182,26 @@ namespace Assignment2
                         ar2[pos++] = temp;
                     }
                 }
+                // If the length of the input array is 1, we print the output using the below loop
+                if (ar2.Length == 1)
+                {
+                    Console.Write("[" + ar2[0] + "]");
+                }
+                // In all other cases we print the output of the method using the below loop
                 for (int b = 0; b < ar2.Length; b++)
                 {
+                    // For the start of the output we print using the below statement
                     if (b == 0)
                     {
                         Console.Write("[" + ar2[b]);
                     }
+                    // The end of the shuffled array is printed using the following statement
                     else if (b == ar2.Length - 1)
                     {
                         Console.Write("," + ar2[b] + "]");
                     }
-                    else
+                    // The remaining elements of the array in the middle are outputted using this statement shown below
+                    else 
                     {
                         Console.Write("," + ar2[b]);
                     }
@@ -226,14 +238,17 @@ namespace Assignment2
                 int count = 0;
                 // A dictionary is used for storing the values and its corresponding frequency by comparing it with the input array
                 Dictionary<int, int> cp = new Dictionary<int, int>();
-                // The for loop below checks for each element from the input array and if it exists in the dictionary it adds the count of the number, if not it adds the number to the dictionary
+                // The for loop below checks for each element from the input array and if it exists in the dictionary it adds the count of the number, if not it adds the number to the dictionary with a frequency count of value as 1
                 for (int b = 0; b < nums.Length; b++)
                 {
+                    // Storing the value in a temporary variable element
                     int element = nums[b];
+                    // In case the dictionary contains the earlier stored element we increase the frequency or count of that value in the dictionary 
                     if (cp.ContainsKey(element))
                     {
                         cp[element]++;
                     }
+                    // In all otehr cases we add that element and update its frequency in the value place as 1
                     else
                     {
                         cp.Add(element, 1);
